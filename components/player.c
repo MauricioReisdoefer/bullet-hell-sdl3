@@ -9,7 +9,7 @@
 void Player_Update(Component *self, float dt)
 {
     Player *player = (Player *)self;
-    Rigidbody *rigidbody = GameObject_GetComponent(player->base.owner, COMPONENT_RIGIDBODY);
+    Rigidbody *rigidbody = GameObject_GetComponent(player->script.base.owner, COMPONENT_RIGIDBODY);
 
     const bool *keys = SDL_GetKeyboardState(NULL);
 
@@ -29,12 +29,12 @@ Player *Player_Create(float speed)
     if (!Player)
         return NULL;
 
-    Player->base.type = COMPONENT_SCRIPT;
-    Player->base.update = Player_Update;
+    Player->script.base.type = COMPONENT_SCRIPT;
+    Player->script.base.update = Player_Update;
 
     Player->speed = speed;
 
-    Player->base.owner = NULL;
+    Player->script.base.owner = NULL;
 
     return Player;
 }

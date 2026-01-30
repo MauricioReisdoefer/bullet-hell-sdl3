@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include "components/script.h"
 #include <stdlib.h>
 
 GameObject *GameObject_Create(void)
@@ -37,6 +38,36 @@ Component *GameObject_GetComponent(GameObject *gameobject, ComponentType type)
     {
         if (gameobject->components[i]->type == type)
             return gameobject->components[i];
+    }
+
+    return NULL;
+}
+
+void GameObject_AddScript(GameObject *gameobject, ScriptComponent *script)
+{
+    if (!gameobject || !script)
+        return;
+
+    script->base.type = COMPONENT_SCRIPT;
+
+    GameObject_AddComponent(gameobject, (Component *)script);
+}
+
+Component *GameObject_GetScript(GameObject *gameobject, TypeID type)
+{
+    if (!gameobject)
+        return NULL;
+
+    for (int i = 0; i < gameobject->componentCount; i++)
+    {
+        Component *component = gameobject->components[i];
+
+        if (component->type == COMPONENT_SCRIPT)
+        {
+            ScriptComponent *script = (ScriptComponent *)component;
+            if (script->typeID == type)
+                return component;
+        }
     }
 
     return NULL;

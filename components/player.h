@@ -1,11 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "component.h"
+#include "script.h"
 
 typedef struct
 {
-    Component base;
+    ScriptComponent script;
 
     float speed;
 
