@@ -5,9 +5,13 @@
 #include "gameobject.h"
 #include "transform.h"
 #include "rigidbody.h"
+#include "color.h"
 
 const int HEIGHT = 500;
 const int WIDTH = 750;
+
+const Color WHITE = {255, 255, 255, 255};
+const Color BLACK = {0, 0, 0, 255};
 
 int main(void)
 {
@@ -37,14 +41,14 @@ int main(void)
     Transform *transform = Transform_Create(0, 0);
     Rigidbody *rigidbody = Rigidbody_Create();
 
-    GameObject_AddComponent(gameObject, transform);
-    GameObject_AddComponent(gameObject, rigidbody);
+    GameObject_AddComponent(gameObject, (Component *)transform);
+    GameObject_AddComponent(gameObject, (Component *)rigidbody);
 
-    Transform *transformObject = GameObject_GetComponent(gameObject, COMPONENT_TRANSFORM);
+    Transform *transformObject = (Transform *)GameObject_GetComponent(gameObject, COMPONENT_TRANSFORM);
     transformObject->scaleX = 100.0f;
     transformObject->scaleY = 100.0f;
 
-    // GameLoop
+    // GAME LOOP
     int isRunning = 1;
 
     SDL_Event event;
@@ -74,5 +78,8 @@ int main(void)
             if (event.type == SDL_EVENT_QUIT)
                 isRunning = 0;
         }
+
+        SDL_SetRenderDrawColor(renderer, WHITE.red, WHITE.green, WHITE.blue, WHITE.alpha);
+        SDL_RenderClear(renderer);
     }
 }
