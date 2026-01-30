@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "rigidbody.h"
 #include "transform.h"
 #include "gameobject.h"
@@ -14,14 +15,18 @@ Rigidbody *Rigidbody_Create(void)
 
     rb->velocityX = 0.0f;
     rb->velocityY = 0.0f;
+    rb->friction = 0.0f;
+
+    rb->forceX = 0.0f;
+    rb->forceY = 0.0f;
 
     return rb;
 }
 
 void Rigidbody_AddForce(Rigidbody *rb, float fx, float fy)
 {
-    rb->velocityX += fx;
-    rb->velocityY += fy;
+    rb->forceX += fx;
+    rb->forceY += fy;
 }
 
 void Rigidbody_Update(Component *self, float dt)
@@ -38,9 +43,22 @@ void Rigidbody_Update(Component *self, float dt)
     if (!transform)
         return;
 
+    float acelerationx = rb->forceX / rb->mass;
+    float acelerationy = rb->forceY / rb->mass;
+
+    rb->velocityX += acelerationx * dt;
+    rb->velocityY += acelerationy * dt;
+
     transform->x += rb->velocityX * dt;
     transform->y += rb->velocityY * dt;
 
-    rb->velocityX -= rb->mass;
-    rb->velocityY -= rb->mass;
+    float damping = 1.0f - (rb->friction * dt);
+    if (damping < 0.0f)
+        damping = 0.0f;
+
+    rb->velocityX *= damping;
+    rb->velocityY *= damping;
+
+    rb->forceX = 0.0f;
+    rb->forceY = 0.0f;
 }

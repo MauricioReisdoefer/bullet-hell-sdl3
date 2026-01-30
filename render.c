@@ -3,7 +3,7 @@
 #include "transform.h"
 #include "color.h"
 
-void SetRenderColor(SDL_Renderer *renderer, Color *color)
+void SetRenderColor(SDL_Renderer *renderer, const Color *color)
 {
     SDL_SetRenderDrawColor(renderer, color->red, color->green, color->blue, color->alpha);
 }
@@ -11,5 +11,5 @@ void SetRenderColor(SDL_Renderer *renderer, Color *color)
 void RenderTransform(SDL_Renderer *renderer, Transform *transform)
 {
     SDL_FRect rect = {transform->x, transform->y, transform->scaleX, transform->scaleY};
-    SDL_RenderRect(renderer, &rect);
+    SDL_RenderFillRect(renderer, &rect);
 }

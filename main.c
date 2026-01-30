@@ -6,6 +6,7 @@
 #include "transform.h"
 #include "rigidbody.h"
 #include "color.h"
+#include "render.h"
 
 const int HEIGHT = 500;
 const int WIDTH = 750;
@@ -45,8 +46,11 @@ int main(void)
     GameObject_AddComponent(gameObject, (Component *)rigidbody);
 
     Transform *transformObject = (Transform *)GameObject_GetComponent(gameObject, COMPONENT_TRANSFORM);
-    transformObject->scaleX = 100.0f;
-    transformObject->scaleY = 100.0f;
+    transformObject->scaleX = 25.0f;
+    transformObject->scaleY = 25.0f;
+
+    rigidbody->mass = 1.0f;
+    rigidbody->friction = 15.0f;
 
     // GAME LOOP
     int isRunning = 1;
@@ -65,13 +69,13 @@ int main(void)
         const bool *keys = SDL_GetKeyboardState(NULL);
 
         if (keys[SDL_SCANCODE_W])
-            Rigidbody_AddForce(rigidbody, 0, 1);
+            Rigidbody_AddForce(rigidbody, 0, -500);
         if (keys[SDL_SCANCODE_S])
-            Rigidbody_AddForce(rigidbody, 0, -1);
+            Rigidbody_AddForce(rigidbody, 0, 500);
         if (keys[SDL_SCANCODE_D])
-            Rigidbody_AddForce(rigidbody, 1, 0);
+            Rigidbody_AddForce(rigidbody, 500, 0);
         if (keys[SDL_SCANCODE_A])
-            Rigidbody_AddForce(rigidbody, -1, 0);
+            Rigidbody_AddForce(rigidbody, -500, 0);
 
         while (SDL_PollEvent(&event))
         {
@@ -79,7 +83,13 @@ int main(void)
                 isRunning = 0;
         }
 
-        SDL_SetRenderDrawColor(renderer, WHITE.red, WHITE.green, WHITE.blue, WHITE.alpha);
+        GameObject_Update(gameObject, deltaTime);
+
+        SetRenderColor(renderer, &BLACK);
         SDL_RenderClear(renderer);
+
+        SetRenderColor(renderer, &WHITE);
+        RenderTransform(renderer, transform);
+        SDL_RenderPresent(renderer);
     }
 }

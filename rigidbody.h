@@ -10,7 +10,11 @@ typedef struct
     float velocityX;
     float velocityY;
 
+    float forceX;
+    float forceY;
+
     float mass;
+    float friction;
 
 } Rigidbody;
 
