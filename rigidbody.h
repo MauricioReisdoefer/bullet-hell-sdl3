@@ -15,7 +15,7 @@ typedef struct
 } Rigidbody;
 
 void Rigidbody_Update(Component *self, float dt);
-Rigidbody *Rigidbody_Create(float x, float y);
+Rigidbody *Rigidbody_Create(void);
 void Rigidbody_AddForce(Rigidbody *rb, float fx, float fy);
 
 #endif
