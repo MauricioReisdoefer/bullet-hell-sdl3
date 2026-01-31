@@ -49,8 +49,8 @@ int main(void)
     rb->friction = 2.0f;
     rb->mass = 2.0f;
 
-    transform->scaleX = 100.0f;
-    transform->scaleY = 100.0f;
+    transform->scaleX = 35.0f;
+    transform->scaleY = 35.0f;
 
     GameObject_AddComponent(player, (Component *)transform);
     GameObject_AddComponent(player, (Component *)rb);
@@ -76,6 +76,10 @@ int main(void)
                 running = 0;
         }
 
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_RenderClear(renderer);
+
         GameObject_Update(player, deltaTime);
+        SDL_RenderPresent(renderer);
     }
 }
