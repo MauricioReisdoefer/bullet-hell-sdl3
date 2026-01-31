@@ -1,5 +1,6 @@
 #include "gameobject.h"
 #include "components/script.h"
+
 #include <stdlib.h>
 
 GameObject *GameObject_Create(void)

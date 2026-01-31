@@ -9,7 +9,7 @@
 void Player_Update(Component *self, float dt)
 {
     Player *player = (Player *)self;
-    Rigidbody *rigidbody = GameObject_GetComponent(player->script.base.owner, COMPONENT_RIGIDBODY);
+    Rigidbody *rigidbody = (Rigidbody *)GameObject_GetComponent(player->script.base.owner, COMPONENT_RIGIDBODY);
 
     const bool *keys = SDL_GetKeyboardState(NULL);
 

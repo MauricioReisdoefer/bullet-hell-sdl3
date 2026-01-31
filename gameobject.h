@@ -2,6 +2,7 @@
 #define GAMEOBJECT_H
 
 #include "components/component.h"
+#include "components/script.h"
 
 #define MAX_COMPONENTS 16
 
@@ -17,5 +18,6 @@ void GameObject_AddComponent(GameObject *go, Component *component);
 Component *GameObject_GetComponent(GameObject *go, ComponentType type);
 void GameObject_Update(GameObject *go, float dt);
 void GameObject_Destroy(GameObject *go);
-
+void GameObject_AddScript(GameObject *gameobject, ScriptComponent *script);
+Component *GameObject_GetScript(GameObject *gameobject, TypeID type);
 #endif
